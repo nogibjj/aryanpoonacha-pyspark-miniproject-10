@@ -12,7 +12,7 @@ def main():
     print(df_transformed)
 
     # Execute a SQL query
-    query = "SELECT pl_name, hostname, pl_orbper FROM my_table ORDER BY pl_orbper DESC LIMIT 10"
+    query = "SELECT pl_name, hostname, pl_orbper FROM planets ORDER BY pl_orbper DESC LIMIT 10"
     lib.execute_sql_query(spark, df_transformed, query)
 
     # Stop the Spark session
