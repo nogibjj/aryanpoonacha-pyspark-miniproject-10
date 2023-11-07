@@ -1,36 +1,17 @@
-"""
-ETL-Query script
-"""
-import argparse
-from mylib.extract import extract
-from mylib.transform_load import load
-from mylib.query import query
-
+import mylib.lib as lib
 
 def main():
-    parser = argparse.ArgumentParser(description="ETL-Query script")
-    parser.add_argument("--extract", action="store_true", help="Extract data")
-    parser.add_argument(
-        "--transformload",
-        action="store_true",
-        help="Transform and load data into SQLite db",
-    )
-    parser.add_argument("--query", action="store_true", help="Query data")
+    # Initialize Spark
+    spark = lib.init_spark()
 
-    args = parser.parse_args()
+    # Load data
+    df = lib.load_data(spark)
 
-    if args.extract:
-        print("Extracting data...")
-        extract()
+    # Clean and transform data
+    df_transformed = lib.clean_transform_data(df)
+    print(df_transformed)
 
-    if args.transformload:
-        print("Transforming and loadings data into SQLite database...")
-        load()
-
-    if args.query:
-        print("Querying data...")
-        query()
-
+    # You can add more steps here depending on your analysis
 
 if __name__ == "__main__":
     main()

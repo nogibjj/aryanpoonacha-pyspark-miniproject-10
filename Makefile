@@ -21,6 +21,6 @@ refactor: format lint
 
 deploy:
 	#extract, transform, load, query
-	python -m main --extract --transformload --query
+	python -m main
 		
 all: install lint test format deploy
