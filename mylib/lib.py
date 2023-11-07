@@ -4,6 +4,7 @@ Extract dataset into sql db
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, when, expr, udf
 from pyspark.sql.types import FloatType
+from pyspark.sql import DataFrame 
 
 def init_spark(app_name="PlanetAnalysis"):
     spark = SparkSession.builder.appName(app_name).getOrCreate()
@@ -66,3 +67,16 @@ def clean_transform_data(df):
     df = df.withColumn('pl_orbper_squared', expr('pl_orbper * pl_orbper'))
 
     return df
+
+def execute_sql_query(spark: SparkSession, df: DataFrame, query: str):
+    """
+    Execute a SQL query on the DataFrame
+    """
+    # Register the DataFrame as a SQL temporary view
+    df.createOrReplaceTempView("planets")
+
+    # Execute the SQL query
+    result = spark.sql(query)
+
+    # Print the results
+    result.show()
