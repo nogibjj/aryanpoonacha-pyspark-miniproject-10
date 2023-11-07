@@ -11,7 +11,8 @@ def main():
     df_transformed = lib.clean_transform_data(df)
     print(df_transformed)
 
-    # You can add more steps here depending on your analysis
+    # Stop the Spark session
+    spark.stop()
 
 if __name__ == "__main__":
     main()
